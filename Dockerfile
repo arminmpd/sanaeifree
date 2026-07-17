@@ -14,4 +14,4 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 8080
 
 # اجرای اسکریپت ورودی
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
