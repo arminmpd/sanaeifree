@@ -5,8 +5,7 @@ USER root
 RUN apk add --no-cache \
     nginx \
     gettext \
-    bash \
-    curl
+    bash
 
 COPY nginx.conf.template /etc/nginx/nginx.conf.template
 COPY entrypoint.sh /entrypoint.sh
