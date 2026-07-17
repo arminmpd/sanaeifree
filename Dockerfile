@@ -1,18 +1,17 @@
-FROM ghcr.io/mhsanaei/3x-ui:latest
+FROM nginx:alpine
 
-USER root
+# نصب ابزار envsubst برای جایگزینی متغیرها
+RUN apk add --no-cache gettext
 
-RUN apk add --no-cache \
-    nginx \
-    gettext \
-    bash
+# کپی فایل کانفیگ Nginx
+COPY nginx.conf /etc/nginx/nginx.conf.template
 
-COPY nginx.conf.template /etc/nginx/nginx.conf.template
-COPY entrypoint.sh /entrypoint.sh
+# اسکریپت ورودی برای جایگزینی متغیرها
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
-RUN chmod 755 /entrypoint.sh \
-    && mkdir -p /run/nginx /etc/x-ui
+# پورت پیش‌فرض
+EXPOSE 8080
 
-EXPOSE 3000
-
-ENTRYPOINT ["/entrypoint.sh"]
+# اجرای اسکریپت ورودی
+ENTRYPOINT ["/docker-entrypoint.sh"]
